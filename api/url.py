@@ -22,7 +22,7 @@ def get_url():
     #首先檢查輸入是否為合法/可用地址
     try:
         if not urlparse(url_here).scheme:
-            url_here = 'http://' + url_here
+            url_here = 'https://' + url_here
         checker = urllib.request.urlopen(url_here).getcode()
         print(checker)
         if checker == 200:
@@ -32,8 +32,6 @@ def get_url():
     except Exception as e:
             print(e)
             return {"error":"error"}
-
-
 
     #這裡是使用者輸入的長網址
     print(url_here)
@@ -46,7 +44,7 @@ def get_url():
         for x in range(number_of_strings):
             shorted_url = ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(length_of_string))
         r.set(url_here,shorted_url)
-
+        r.set(shorted_url,url_here)
         return {"ok_not_get":shorted_url}
     else:
         return {"ok_get":hit_check}
