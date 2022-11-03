@@ -27,14 +27,22 @@ got_url = async(the_url) => {
     const response = await fetch("/api/get_url?url_here="+the_url,options)
     const result = await response.json();
     if(result.ok_get){
-        console.log("We have this url before")
+        console.log("We have this url before",result.ok_get)
+        show_the_shorted_url(result.ok_get)
     }else if(result.ok_not_get){
-        console.log("This is a new url")
+        console.log("This is a new url",result.ok_not_get)
+        show_the_shorted_url(result.ok_not_get)
     }else{
         console.log("something wrong happend")
+        document.getElementById("shorted_url").innerHTML = "Errored!"
     }
 }
 
 do_alert = () => {
     document.getElementById("alerts").innerHTML="你沒輸入"
+}
+
+show_the_shorted_url = (url) => {
+    place = document.getElementById("shorted_url")
+    place.innerHTML = "www.vivien.fun/" + url
 }
