@@ -7,7 +7,7 @@ import redis, string, random
 import urllib.request
 from urllib.parse import urlparse
 url = Blueprint('url',__name__,template_folder="templates")
-r = redis.Redis(host='localhost', port=6379, db=0 , charset="utf-8" , decode_responses=True)
+r = redis.Redis(host='redis', port=6379, db=0 , charset="utf-8" , decode_responses=True)
 
 #docker run --name a_redis -p 6379:6379 -d redis
 
@@ -18,7 +18,8 @@ length_of_string = 8
 @url.route("/api/get_url",methods=["GET"])
 def get_url(): 
     url_here = request.args.get("url_here")
-
+    url_here = str(url_here)
+    print(">>>>>>>",url_here)
     #首先檢查輸入是否為合法/可用地址
     try:
         if not urlparse(url_here).scheme:

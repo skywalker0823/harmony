@@ -15,6 +15,7 @@ def shorted(variable):
     # shorted_url = request.args.get("XD")
     # Redis check shorted if hit
     
+
     url = r.get(variable)
     if url == None:
         print("short url wrong!")

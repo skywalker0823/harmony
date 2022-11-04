@@ -1,0 +1,16 @@
+version: '3'
+services:
+  web:
+    build: .
+    container_name: a_flask
+    ports:
+     - "3000:3000"
+    volumes:
+     - .:/app
+    depends_on:
+     - redis
+  redis:
+    image: redis
+    ports:
+      - "6379:6379"
+    container_name: a_redis

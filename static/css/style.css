@@ -13,3 +13,8 @@ body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fiel
     padding-left: 6px;
     margin: 5px;
 }
+.main_frame{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
