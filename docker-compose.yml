@@ -1,16 +1,29 @@
 version: '3'
 services:
-  web:
+  flask:
     build: .
     container_name: a_flask
-    ports:
-     - "3000:3000"
+    # ports:
+    #  - "3000:3000"
+    # expose 只暴露給 container 且無法從外部連線
+    expose:
+      - 3000
     volumes:
      - .:/app
     depends_on:
      - redis
+    
   redis:
     image: redis
     ports:
       - "6379:6379"
     container_name: a_redis
+    
+  nginx:
+    build: ./nginx
+    container_name: a_nginx
+    ports:
+     - "80:80"
+     - "443:443"
+    depends_on:
+    - flask
