@@ -5,7 +5,9 @@
 * HTML, CSS, JS
 * Python, Flask
 * Redis
-* Docker
+* Nginx
+* Docker/Docker compose
 
 ## Usage
 * docker compose up
+* Open url 127.0.0.1
