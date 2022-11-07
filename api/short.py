@@ -4,13 +4,13 @@ from crypt import methods
 from flask import Blueprint, jsonify, request, redirect
 import redis, string, random
 short = Blueprint('short',__name__,template_folder="templates")
-r = redis.Redis(host='localhost', port=6379, db=0 , charset="utf-8" , decode_responses=True)
+r = redis.Redis(host='redis', port=6379, db=0 , charset="utf-8" , decode_responses=True)
 
 
 #接收到短網址轉址請求
 @short.route("/<variable>",methods=["GET"])
 def shorted(variable):
-    print(variable)
+    print("短網址進來!",variable)
     #查詢並轉址
     # shorted_url = request.args.get("XD")
     # Redis check shorted if hit
