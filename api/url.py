@@ -5,6 +5,7 @@ from flask import Blueprint, jsonify, request
 
 import redis, string, random
 import urllib.request
+from urllib.request import Request, urlopen
 from urllib.parse import urlparse
 url = Blueprint('url',__name__,template_folder="templates")
 r = redis.Redis(host='redis', port=6379, db=0 , charset="utf-8" , decode_responses=True)
@@ -24,7 +25,8 @@ def get_url():
     try:
         if not urlparse(url_here).scheme:
             url_here = 'https://' + url_here
-        checker = urllib.request.urlopen(url_here).getcode()
+        req = Request(url_here, headers={'User-Agent': 'Mozilla/5.0'})
+        checker = urllib.request.urlopen(req).getcode()
         print(checker)
         if checker == 200:
             pass
