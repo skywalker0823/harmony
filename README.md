@@ -1,5 +1,6 @@
-# harmony
-* 縮網址服務 with docker compose
+# Harmony
+## Information
+* Shortened url service with docker compose
 * https://vivien.fun/
 
 ## Techs & requirements
@@ -9,6 +10,10 @@
 * Nginx
 * Docker/Docker compose
 
-## Usage
+## Try this yourself
 * docker compose up --detach
 * Open url 127.0.0.1
+* Insert any url, and get shortened url.
+
+## Clear
+* docker compose down
