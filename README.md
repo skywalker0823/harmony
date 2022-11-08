@@ -1,5 +1,6 @@
 # harmony
 * 縮網址服務 with docker compose
+* https://vivien.fun/
 
 ## Techs & requirements
 * HTML, CSS, JS
@@ -9,5 +10,5 @@
 * Docker/Docker compose
 
 ## Usage
-* docker compose up
+* docker compose up --detach
 * Open url 127.0.0.1
