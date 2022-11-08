@@ -18,7 +18,7 @@ services:
     ports:
       - "6379:6379"
     container_name: a_redis
-    
+
   nginx:
     build: ./nginx
     container_name: a_nginx

@@ -44,5 +44,5 @@ do_alert = () => {
 
 show_the_shorted_url = (url) => {
     place = document.getElementById("shorted_url")
-    place.innerHTML = "www.vivien.fun/" + url
+    place.innerHTML = "https://vivien.fun/" + url
 }
