@@ -1,6 +1,5 @@
 # 此端負責主要縮網址 api 服務
 
-from tkinter.tix import CheckList
 from flask import Blueprint, jsonify, request
 
 import redis, string, random
@@ -34,7 +33,7 @@ def get_url():
             return {"error":"error"}
     except Exception as e:
             print(e)
-            return {"error":"error"}
+            return {"error":"error_Except"}
 
     #這裡是使用者輸入的長網址
     print(url_here)
