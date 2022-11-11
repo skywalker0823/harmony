@@ -10,7 +10,7 @@ r = redis.Redis(host='redis', port=6379, db=0 , charset="utf-8" , decode_respons
 #接收到短網址轉址請求
 @short.route("/<variable>",methods=["GET"])
 def shorted(variable):
-    print("短網址進來! 轉址出得去! 台灣發大財!",variable)
+    print("=_=a",variable)
     #查詢並轉址
     # shorted_url = request.args.get("XD")
     # Redis check shorted if hit
