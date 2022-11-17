@@ -12,6 +12,7 @@ services:
      - .:/app
     depends_on:
      - redis
+    image: a_flask:latest
     
   redis:
     image: redis
@@ -27,3 +28,4 @@ services:
      - "443:443"
     depends_on:
     - flask
+    image: a_nginx:latest

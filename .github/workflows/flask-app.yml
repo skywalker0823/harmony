@@ -36,11 +36,13 @@ jobs:
     # Build the Docker image
     - name: Build
       run: |-
-        docker-compose build --tag ${{ secrets.ARTIFACT_REGISTRY }} .
+        docker-compose build
 
     - name: Publish
       run: |-
-        docker-compose push ${{ secrets.ARTIFACT_REGISTRY }}
+        docker tag a_flask ${{ secrets.A_FLASK }}
+        docker tag a_nginx ${{ secrets.A_NGINX }}
+        docker-compose push 
 
     - name: Update startup script to prune and update IP address
       run: |-
