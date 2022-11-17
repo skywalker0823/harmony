@@ -58,12 +58,12 @@ jobs:
     #           --header 'Authorization: Basic $DDNS_AUTH_STRING'"
 
 
-    - name: Deploy
-      run: |-
-        gcloud compute instances update-container "$GCE_INSTANCE" \
-          --zone "$GCE_INSTANCE_ZONE" \
-          --container-image ${{ secrets.A_FLASK }}
-          --container-image ${{ secrets.A_NGINX }}
+    # - name: Deploy
+    #   run: |-
+    #     gcloud compute instances update-container "$GCE_INSTANCE" \
+    #       --zone "$GCE_INSTANCE_ZONE" \
+    #       --container-image ${{ secrets.A_FLASK }}
+    #       --container-image ${{ secrets.A_NGINX }}
 
 
 
