@@ -1,6 +1,6 @@
 # Harmony
 ## Information
-* Shortened url service with docker compose
+* Shortened url service with full CICD
 * https://vivien.fun/
 
 ## Techs & requirements
@@ -8,7 +8,12 @@
 * Python, Flask
 * Redis
 * Nginx
-* Docker/Docker compose
+* CICD
+    * Docker/Docker compose
+    * Github Action
+    * GCP
+        * Artifact Registry
+        * Compute Engine
 
 ## Try this yourself
 * docker compose up --detach

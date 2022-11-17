@@ -39,7 +39,7 @@ jobs:
       run: |-
         docker-compose build
 
-
+    # Push images to Artifact Registry
     - name: Publish
       run: |-
         docker tag a_flask ${{ secrets.A_FLASK }}
@@ -47,23 +47,27 @@ jobs:
         docker push ${{ secrets.A_FLASK }}
         docker push ${{ secrets.A_NGINX }} 
 
-    # - name: Update startup script to prune and update IP address
-    #   run: |-
-    #     gcloud compute instances add-metadata $GCE_INSTANCE \
-    #       --zone "$GCE_INSTANCE_ZONE" \
-    #       --metadata=startup-script="#! /bin/bash
-    #         docker image prune -af
-    #         curl --location --request GET 'domains.google.com/nic/update?hostname=<vivien.fun>' \
-    #           --header 'User-Agent: VM' \
-    #           --header 'Authorization: Basic $DDNS_AUTH_STRING'"
 
 
-    # - name: Deploy
-    #   run: |-
-    #     gcloud compute instances update-container "$GCE_INSTANCE" \
-    #       --zone "$GCE_INSTANCE_ZONE" \
-    #       --container-image ${{ secrets.A_FLASK }}
-    #       --container-image ${{ secrets.A_NGINX }}
+
+
+    - name: Update startup script to prune and update IP address
+      run: |-
+        gcloud compute instances add-metadata $GCE_INSTANCE \
+          --zone "$GCE_INSTANCE_ZONE" \
+          --metadata=startup-script="#! /bin/bash
+            docker image prune -af
+            curl --location --request GET 'domains.google.com/nic/update?hostname=<vivien.fun>' \
+              --header 'User-Agent: VM' \
+              --header 'Authorization: Basic $DDNS_AUTH_STRING'"
+
+
+    - name: Deploy
+      run: |-
+        gcloud compute instances update-container "$GCE_INSTANCE" \
+          --zone "$GCE_INSTANCE_ZONE" \
+          --container-image ${{ secrets.A_FLASK }}
+          --container-image ${{ secrets.A_NGINX }}
 
 
 
