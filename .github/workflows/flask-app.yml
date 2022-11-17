@@ -40,9 +40,8 @@ jobs:
 
     - name: Publish
       run: |-
-        docker tag a_flask ${{ secrets.A_FLASK }}
-        docker tag a_nginx ${{ secrets.A_NGINX }}
-        docker-compose push 
+        docker push a_flask ${{ secrets.A_FLASK }}
+        docker push a_nginx ${{ secrets.A_NGINX }} 
 
     - name: Update startup script to prune and update IP address
       run: |-
