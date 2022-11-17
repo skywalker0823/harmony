@@ -6,7 +6,7 @@ on:
     branches: [ main ]
 
 env:
-  PROJECT_ID: ${{ HARMONY_GCP_PROJECT_ID }}
+  PROJECT_ID: ${{ secrets.HARMONY_GCP_PROJECT_ID }}
   GCE_INSTANCE: instance-1
   GCE_INSTANCE_ZONE: us-west1-b
 
@@ -55,6 +55,8 @@ jobs:
         gcloud compute instances update-container "$GCE_INSTANCE" \
           --zone "$GCE_INSTANCE_ZONE" \
           --container-image "gcr.io/$PROJECT_ID/$GCE_INSTANCE-image:$GITHUB_SHA"
+
+
     # Purge old images from GCR (not latest)
     - name: Purge GCR images
       run: |-
@@ -62,41 +64,3 @@ jobs:
           --format="get(digest)" --filter="NOT tags=$GITHUB_SHA" | \
           awk -v image_path="gcr.io/$PROJECT_ID/$GCE_INSTANCE-image@" '{print image_path $1}' | \
           xargs -r gcloud container images delete --force-delete-tags --quiet
-
-# jobs:
-#   build:
-#     runs-on: ubuntu-latest
-#     steps:
-#     - uses: actions/checkout@v3
-#     - name: Set up Python 3.10
-#       uses: actions/setup-python@v3
-#       with:
-#         python-version: "3.10"
-#     - name: Install dependencies
-#       run: |
-#         python -m pip install --upgrade pip
-#         pip install flake8 pytest
-#         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-#     - name: Lint with flake8
-#       run: |
-#         flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-#         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-#     # - name: Test with pytest
-#     #   run: |
-#     #     python -m pytest
-#     - name: upload image to ECR
-#       uses: appleboy/docker-ecr-action@master
-#       with:
-#         access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
-#         secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-#         registry: ${{ secrets.REGISTRY }}
-#         cache_from: ${{ secrets.CACHE }}
-#         repo: pikxl
-#         region: us-west-2
-#         dockerfile: dockerfile
-#         tags: latest
-#     # - name: Deploy on AWS EC2
-#     #   env:
-#     #   run:
-
-
