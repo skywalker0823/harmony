@@ -40,6 +40,8 @@ jobs:
 
     - name: Publish
       run: |-
+        docker tag a_flask ${{ secrets.A_FLASK }}
+        docker tag a_nginx ${{ secrets.A_NGINX }}
         docker push ${{ secrets.A_FLASK }}
         docker push ${{ secrets.A_NGINX }} 
 
