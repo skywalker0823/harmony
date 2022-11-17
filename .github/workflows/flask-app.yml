@@ -32,13 +32,14 @@ jobs:
     # Build the Docker image
     - name: Build
       run: |-
-        docker-compose build --tag "gcr.io/$PROJECT_ID/$GCE_INSTANCE-image:$GITHUB_SHA" .
-     # Push the Docker image to Google Container Registry
+        docker-compose build --tag "us-west1-docker.pkg.dev/plated-course-363807/harmony-registry" .
+     # Push the Docker image to Google Container 
+     
+
     - name: Publish
       run: |-
-        docker push "gcr.io/$PROJECT_ID/$GCE_INSTANCE-image:$GITHUB_SHA"
-
-
+        docker push "us-west1-docker.pkg.dev/plated-course-363807/harmony-registry"
+      #gcr.io/$PROJECT_ID/$GCE_INSTANCE-image:$GITHUB_SHA
     - name: Update startup script to prune and update IP address
       run: |-
         gcloud compute instances add-metadata $GCE_INSTANCE \
