@@ -24,22 +24,24 @@ jobs:
       uses: 'google-github-actions/auth@v1'
       with:
         credentials_json: '${{ secrets.GCP_KEY }}'
+
+
     # Setup gcloud CLI
     - name: Set up Cloud SDK
       uses: google-github-actions/setup-gcloud@v1
     - run: |-
         gcloud --quiet auth configure-docker
+
+
     # Build the Docker image
     - name: Build
       run: |-
-        docker-compose build --tag "us-west1-docker.pkg.dev/plated-course-363807/harmony-registry" .
-     # Push the Docker image to Google Container 
-     
+        docker-compose build --tag {{ secrets.ARTIFACT_REGISTRY }} .
 
     - name: Publish
       run: |-
-        docker push "us-west1-docker.pkg.dev/plated-course-363807/harmony-registry"
-      #gcr.io/$PROJECT_ID/$GCE_INSTANCE-image:$GITHUB_SHA
+        docker-compose push {{ secrets.ARTIFACT_REGISTRY }}
+
     - name: Update startup script to prune and update IP address
       run: |-
         gcloud compute instances add-metadata $GCE_INSTANCE \
