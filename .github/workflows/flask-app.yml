@@ -52,16 +52,19 @@ jobs:
           --zone "$GCE_INSTANCE_ZONE" \
           --metadata=startup-script="#! /bin/bash
             docker image prune -af
+            docker pull ${{ secrets.A_FLASK }}
+            docker pull ${{ secrets.A_NGINX }}
             curl --location --request GET 'domains.google.com/nic/update?hostname=<vivien.fun>' \
               --header 'User-Agent: VM' \
               --header 'Authorization: Basic $DDNS_AUTH_STRING'"
+            curl ip.sb
 
-    - name: Deploy
-      run: |-
-        gcloud compute instances update-container "$GCE_INSTANCE" \
-          --zone "$GCE_INSTANCE_ZONE" \
-          --container-image ${{ secrets.A_FLASK }}
-          --container-image ${{ secrets.A_NGINX }}
+    # - name: Deploy
+    #   run: |-
+    #     gcloud compute instances update-container "$GCE_INSTANCE" \
+    #       --zone "$GCE_INSTANCE_ZONE" \
+    #       --container-image ${{ secrets.A_FLASK }}
+    #       --container-image ${{ secrets.A_NGINX }}
 
     # # Purge old images from GCR (not latest)
     # - name: Purge GCR images
