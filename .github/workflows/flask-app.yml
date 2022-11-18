@@ -25,7 +25,6 @@ jobs:
       with:
         credentials_json: '${{ secrets.GCP_KEY }}'
 
-
     # Setup gcloud CLI
     - name: Set up Cloud SDK
       uses: google-github-actions/setup-gcloud@v1
@@ -47,10 +46,6 @@ jobs:
         docker push ${{ secrets.A_FLASK }}
         docker push ${{ secrets.A_NGINX }} 
 
-
-
-
-
     - name: Update startup script to prune and update IP address
       run: |-
         gcloud compute instances add-metadata $GCE_INSTANCE \
@@ -61,15 +56,12 @@ jobs:
               --header 'User-Agent: VM' \
               --header 'Authorization: Basic $DDNS_AUTH_STRING'"
 
-
     - name: Deploy
       run: |-
         gcloud compute instances update-container "$GCE_INSTANCE" \
           --zone "$GCE_INSTANCE_ZONE" \
           --container-image ${{ secrets.A_FLASK }}
           --container-image ${{ secrets.A_NGINX }}
-
-
 
     # # Purge old images from GCR (not latest)
     # - name: Purge GCR images
