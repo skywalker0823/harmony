@@ -45,32 +45,16 @@ jobs:
         docker tag a_nginx ${{ secrets.A_NGINX }}
         docker push ${{ secrets.A_FLASK }}
         docker push ${{ secrets.A_NGINX }} 
-        ls
         
 
-    # - name: Update startup script to prune and update IP address
-    #   run: |-
-    #     gcloud compute instances add-metadata $GCE_INSTANCE \
-    #       --zone "$GCE_INSTANCE_ZONE" \
-    #       --metadata=startup-script="#! /bin/bash
-    #         docker image prune -af
-    #         docker pull ${{ secrets.A_FLASK }}
-    #         docker pull ${{ secrets.A_NGINX }}
-    #         curl --location --request GET 'domains.google.com/nic/update?hostname=<vivien.fun>' \
-    #           --header 'User-Agent: VM' \
-    #           --header 'Authorization: Basic $DDNS_AUTH_STRING'"
+    - name: Deploy(Kill and update)
+      run: |-
+        gcloud compute ssh "$GCE_INSTANCE" \
+          --zone "$GCE_INSTANCE_ZONE" \
+          --command 'docker pull python'
 
-    # - name: Deploy
-    #   run: |-
-    #     gcloud compute instances update-container "$GCE_INSTANCE" \
-    #       --zone "$GCE_INSTANCE_ZONE" \
-    #       --container-image ${{ secrets.A_FLASK }}
-    #       --container-image ${{ secrets.A_NGINX }}
 
     # # Purge old images from GCR (not latest)
     # - name: Purge GCR images
     #   run: |-
-    #     gcloud container images list-tags gcr.io/$PROJECT_ID/$GCE_INSTANCE-image \
-    #       --format="get(digest)" --filter="NOT tags=$GITHUB_SHA" | \
-    #       awk -v image_path="gcr.io/$PROJECT_ID/$GCE_INSTANCE-image@" '{print image_path $1}' | \
-    #       xargs -r gcloud container images delete --force-delete-tags --quiet
+    #     gcloud compute ssh instance-1 --zone us-west1-b --command 'docker system prune -af'
