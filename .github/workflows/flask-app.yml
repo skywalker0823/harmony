@@ -45,7 +45,8 @@ jobs:
         docker tag a_nginx ${{ secrets.A_NGINX }}
         docker push ${{ secrets.A_FLASK }}
         docker push ${{ secrets.A_NGINX }} 
-        ll
+        ls
+        
 
     # - name: Update startup script to prune and update IP address
     #   run: |-
