@@ -51,10 +51,10 @@ jobs:
       run: |-
         gcloud compute ssh "$GCE_INSTANCE" \
           --zone "$GCE_INSTANCE_ZONE" \
-          --command 'docker pull python'
+          --command 'sh update.sh'
 
 
     # # Purge old images from GCR (not latest)
     # - name: Purge GCR images
     #   run: |-
-    #     gcloud compute ssh instance-1 --zone us-west1-b --command 'docker system prune -af'
+    #     gcloud compute ssh "$GCE_INSTANCE" --zone "$GCE_INSTANCE_ZONE" --command 'docker system prune -af'
