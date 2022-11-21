@@ -45,18 +45,19 @@ jobs:
         docker tag a_nginx ${{ secrets.A_NGINX }}
         docker push ${{ secrets.A_FLASK }}
         docker push ${{ secrets.A_NGINX }} 
+        ll
 
-    - name: Update startup script to prune and update IP address
-      run: |-
-        gcloud compute instances add-metadata $GCE_INSTANCE \
-          --zone "$GCE_INSTANCE_ZONE" \
-          --metadata=startup-script="#! /bin/bash
-            docker image prune -af
-            docker pull ${{ secrets.A_FLASK }}
-            docker pull ${{ secrets.A_NGINX }}
-            curl --location --request GET 'domains.google.com/nic/update?hostname=<vivien.fun>' \
-              --header 'User-Agent: VM' \
-              --header 'Authorization: Basic $DDNS_AUTH_STRING'"
+    # - name: Update startup script to prune and update IP address
+    #   run: |-
+    #     gcloud compute instances add-metadata $GCE_INSTANCE \
+    #       --zone "$GCE_INSTANCE_ZONE" \
+    #       --metadata=startup-script="#! /bin/bash
+    #         docker image prune -af
+    #         docker pull ${{ secrets.A_FLASK }}
+    #         docker pull ${{ secrets.A_NGINX }}
+    #         curl --location --request GET 'domains.google.com/nic/update?hostname=<vivien.fun>' \
+    #           --header 'User-Agent: VM' \
+    #           --header 'Authorization: Basic $DDNS_AUTH_STRING'"
 
     # - name: Deploy
     #   run: |-
