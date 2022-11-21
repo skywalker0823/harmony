@@ -47,11 +47,11 @@ jobs:
         docker push ${{ secrets.A_NGINX }} 
         
 
-    - name: Deploy(Kill and update)
+    - name: Deploy(update)
       run: |-
-        gcloud compute ssh "$GCE_INSTANCE" \
-          --zone "$GCE_INSTANCE_ZONE" \
-          --command 'sh update.sh'
+        gcloud --quiet compute ssh instance-1 \
+          --zone us-west1-b \
+          --command 'pwd'
 
 
     # # Purge old images from GCR (not latest)
