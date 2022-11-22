@@ -49,12 +49,14 @@ jobs:
 
     - name: Deploy(update)
       run: |-
-        gcloud --quiet compute ssh instance-1 \
-          --zone us-west1-b \
-          --command 'pwd'
+        gcloud compute instances update-container "$GCE_INSTANCE" \
+          --zone "$GCE_INSTANCE_ZONE" \
+          --container-image ${{ secrets.A_FLASK }}
+          --container-image ${{ secrets.A_NGINX }}
 
 
-    # # Purge old images from GCR (not latest)
-    # - name: Purge GCR images
-    #   run: |-
-    #     gcloud compute ssh "$GCE_INSTANCE" --zone "$GCE_INSTANCE_ZONE" --command 'docker system prune -af'
+    # Purge old images from GCR (not latest)
+    - name: Purge GCR images
+      run: |-
+        gcloud compute ssh "$GCE_INSTANCE" --zone "$GCE_INSTANCE_ZONE"    
+          --command 'docker system prune -af'
