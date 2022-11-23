@@ -10,6 +10,7 @@ services:
     depends_on:
      - redis
     image: a_flask
+    # 可以將此處改成該 image google cloud 地址
     
   redis:
     image: redis
@@ -26,3 +27,4 @@ services:
     depends_on:
     - flask
     image: a_nginx
+    # 可以將此處改成該 image google cloud 地址

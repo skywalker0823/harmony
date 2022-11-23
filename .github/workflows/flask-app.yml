@@ -38,7 +38,7 @@ jobs:
       run: |-
         docker-compose build
 
-    # Push images to Artifact Registry
+    # Push images to Artifact Registry..
     - name: Publish
       run: |-
         docker tag a_flask ${{ secrets.A_FLASK }}
@@ -60,3 +60,31 @@ jobs:
       run: |-
         gcloud compute ssh "$GCE_INSTANCE" --zone "$GCE_INSTANCE_ZONE"    
           --command 'docker system prune -af'
+
+
+
+
+
+
+
+# Plan B
+# # For convenience; this way we do not need to check if the VM already exists for the
+#       # next step of creating a new instance.
+#       # The quiet option causes it to ignore the error if the VM does not yet exist.
+#       - name: Delete
+#         continue-on-error: true
+#         run: |-
+#           gcloud compute instances delete "$GCE_INSTANCE" \
+#             --zone "$GCE_INSTANCE_ZONE" \
+#             --quiet
+#       # Note service account permissions and scopes are two different things.
+#       # This sets scopes such that the instance can access all services that the
+#       # service account can access
+#       - name: Deploy
+#         run: |-
+#           gcloud compute instances create-with-container "$GCE_INSTANCE" \
+#             --zone "$GCE_INSTANCE_ZONE" \
+#             --machine-type "$GCE_INSTANCE_MACHINE_TYPE" \
+#             --service-account "${{ secrets.GCE_SERVICE_ACCOUNT_EMAIL }}" \
+#             --scopes "https://www.googleapis.com/auth/cloud-platform" \
+#             --container-image "${{ env.IMAGE_URI }}"
