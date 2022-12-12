@@ -8,15 +8,15 @@ req = redis.Redis(host='redis', port=6379, db=0 , charset="utf-8" , decode_respo
 
 
 #接收到短網址轉址請求
-@short.route("/<variable>",methods=["GET"])
-def shorted(variable):
-    print("= =a",variable)
-    #查詢並轉址
-    # shorted_url = request.args.get("XD")
-    # Redis check shorted if hit
-    url = req.get(variable)
-    if url == None:
-        print("short url wrong!")
-        return {"error":"Wrong shorted url"}
-    else:
-        return redirect(url,code=302)
+# @short.route("/<variable>",methods=["GET"])
+# def shorted(variable):
+#     print("= =a",variable)
+#     #查詢並轉址
+#     # shorted_url = request.args.get("XD")
+#     # Redis check shorted if hit
+#     url = req.get(variable)
+#     if url == None:
+#         print("short url wrong!")
+#         return {"error":"Wrong shorted url"}
+#     else:
+#         return redirect(url,code=302)
