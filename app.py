@@ -12,7 +12,7 @@ app.register_blueprint(short)
 def index():
     return rt("index.html")
 
-@app.route("/loaderio-245b5f0e01ae6779ff89042f8cb84efc")
+@app.route("/loaderio-245b5f0e01ae6779ff89042f8cb84efc/")
 def loader():
     return rt("loaderio-245b5f0e01ae6779ff89042f8cb84efc.html")
 
