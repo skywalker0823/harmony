@@ -25,6 +25,21 @@ jobs:
       with:
         credentials_json: '${{ secrets.GCP_KEY }}'
 
+    # flask app test
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.10
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install flask
+    - name: Test Flask app
+      run: |
+        python app.py
+        
+  
+
     # Setup gcloud CLI
     - name: Set up Cloud SDK
       uses: google-github-actions/setup-gcloud@v1
@@ -38,16 +53,15 @@ jobs:
       run: |-
         docker-compose build
 
-    # Push images to Artifact Registry..
+    # Push images to Artifact Registry
     - name: Publish
       run: |-
         docker tag a_flask ${{ secrets.A_FLASK }}
         docker tag a_nginx ${{ secrets.A_NGINX }}
         docker push ${{ secrets.A_FLASK }}
         docker push ${{ secrets.A_NGINX }} 
-        
-
-    - name: Deploy(update)
+    # Update the container image on the GCE instance
+    - name: Deploy
       run: |-
         gcloud compute instances update-container "$GCE_INSTANCE" \
           --zone "$GCE_INSTANCE_ZONE" \
@@ -55,11 +69,19 @@ jobs:
           --container-image ${{ secrets.A_NGINX }}
 
 
-    # Purge old images from GCR (not latest)
-    - name: Purge GCR images
-      run: |-
-        gcloud compute ssh "$GCE_INSTANCE" --zone "$GCE_INSTANCE_ZONE"    
-          --command 'docker system prune -af'
+    # - name: Deploy(update)
+    #   run: |-
+    #     gcloud compute instances update-container "$GCE_INSTANCE" \
+    #       --zone "$GCE_INSTANCE_ZONE" \
+    #       --container-image ${{ secrets.A_FLASK }}
+    #       --container-image ${{ secrets.A_NGINX }}
+
+
+    # # Purge old images from GCR (not latest)
+    # - name: Purge GCR images
+    #   run: |-
+    #     gcloud compute ssh "$GCE_INSTANCE" --zone "$GCE_INSTANCE_ZONE"    
+    #       --command 'docker system prune -af'
 
 
 

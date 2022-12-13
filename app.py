@@ -1,6 +1,8 @@
+
 from flask import Flask, redirect, session, render_template as rt
 from api.url import url
 from api.short import short
+
 app = Flask(__name__)
 
 
@@ -17,7 +19,9 @@ def loader():
     return rt("loaderio-245b5f0e01ae6779ff89042f8cb84efc.html")
 
 
-
+@app.route("/test")
+def tester():
+    return "get!"
 
 
 if __name__=="__main__":

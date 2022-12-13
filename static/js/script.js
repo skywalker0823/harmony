@@ -1,8 +1,6 @@
 
 
 
-
-
 document.addEventListener("DOMContentLoaded", () => {
     load_complete(); 
   });

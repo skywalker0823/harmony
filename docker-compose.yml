@@ -26,3 +26,16 @@ services:
     depends_on:
     - flask
     image: a_nginx
+  # mysql container
+  # mysql:
+  #   image: mysql:5.7
+  #   container_name: a_mysql
+  #   ports:
+  #     - "3306:3306"
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: {{ mysql_root_password }}
+  #     MYSQL_DATABASE: main_db
+  #     MYSQL_USER: {{ mysql_user }}
+  #     MYSQL_PASSWORD: {{ mysql_password }}
+  #   volumes:
+  #     - ./mysql:/var/lib/mysql
